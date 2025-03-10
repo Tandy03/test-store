@@ -9,6 +9,7 @@
               <a href="{{ product.url }}" class="featured-products__link">
                 <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}" class="featured-products__image" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}">
                 <h3 class="featured-products__name">{{ product.title }}</h3>
+                <p class="featured-products__price">{{ product.price | money }}</p>
               </a>
               <button class="featured-products__add-to-cart" data-product-id="{{ product.id }}">Add to cart</button>
             </div>
@@ -87,3 +88,56 @@
   }
   {% endschema %}
   
+  <style>
+    .featured-products {
+      padding: 20px;
+      background-color: #f8f8f8;
+    }
+    .featured-products__title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .featured-products__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .featured-products__item {
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      padding: 10px;
+      width: calc(25% - 20px);
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .featured-products__link {
+      text-decoration: none;
+      color: inherit;
+    }
+    .featured-products__image {
+      max-width: 100%;
+      height: auto;
+    }
+    .featured-products__name {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .featured-products__price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333333;
+    }
+    .featured-products__add-to-cart {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+    .featured-products__add-to-cart:hover {
+      background-color: #0056b3;
+    }
+  </style>
