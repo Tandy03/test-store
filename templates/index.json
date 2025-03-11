@@ -10,7 +10,7 @@
         ".featured-products {padding: 40px 20px; text-align: center; background-color: #f8f8f8;}",
         ".featured-products__title {font-size: 2rem; font-weight: bold; margin-bottom: 20px; color: #333;}",
         ".featured-products__list {display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 20px;}",
-        ".featured-products__item {width: 100%; max-width: 375px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out; margin: 10px;}",
+        ".featured-products__item {width: 45%; max-width: 375px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out; margin: 10px;}",
         ".featured-products__item:hover {transform: translateY(-5px);}",
         ".featured-products__link {text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;}",
         ".featured-products__image {width: 375px; height: 260px; object-fit: cover; border-radius: 6px;}",
