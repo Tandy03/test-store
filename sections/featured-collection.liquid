@@ -14,10 +14,9 @@
                 height="260px"
               >
               <h3 class="featured-products__name">{{ product.title }}</h3>
-              <p class="featured-products__price">{{ product.price | money }}</p>
             </a>
             <button class="featured-products__add-to-cart" data-product-id="{{ product.variants.first.id }}">
-              Add to cart - {{ product.price | money }}
+              Add to cart - {{ money | product.price }}
             </button>
           </div>
         {% endunless %}
