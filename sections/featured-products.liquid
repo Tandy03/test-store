@@ -9,7 +9,7 @@
       {% for product in products %}
         <div class="featured-products__item">
           <a href="{{ product.url }}" class="featured-products__link">
-            <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}" class="featured-products__image" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}">
+            <img src="{{ product.featured_image | image_url: 'medium' }}" alt="{{ product.title }}" class="featured-products__image" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}">
             <h3 class="featured-products__name">{{ product.title }}</h3>
             <p class="featured-products__price">{{ product.price | money }}</p>
           </a>
