@@ -3,17 +3,23 @@
 <div class="featured-products section-{{ section.id }}-padding">
   <h2 class="featured-products__title">{{ section.settings.title }}</h2>
 
-  {% assign products = section.settings.collection.products | reject: 'id', cart.items | map: 'product' %}
+  {% assign products = section.settings.collection.products %}
   {% if products.size > 0 %}
     <div class="featured-products__list">
       {% for product in products %}
         <div class="featured-products__item">
           <a href="{{ product.url }}" class="featured-products__link">
-            <img src="{{ product.featured_image | image_url: 'medium' }}" alt="{{ product.title }}" class="featured-products__image" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}">
+            <img
+              src="{{ product.featured_image | image_url: 'medium' }}"
+              alt="{{ product.title }}"
+              class="featured-products__image"
+              width="{{ product.featured_image.width }}"
+              height="{{ product.featured_image.height }}"
+            >
             <h3 class="featured-products__name">{{ product.title }}</h3>
             <p class="featured-products__price">{{ product.price | money }}</p>
           </a>
-          <custom-add-to-cart data-product-id="{{ product.id }}"></custom-add-to-cart>
+          <custom-add-to-cart data-product-id="{{ product.variants.first.id }}"></custom-add-to-cart>
         </div>
       {% endfor %}
     </div>

@@ -2,6 +2,10 @@
   "sections": {
     "featured_collection": {
       "type": "featured-collection",
+      "settings": {
+        "collection": "",
+        "title": "Featured Products"
+      },
       "custom_css": [
         ".featured-products {padding: 40px 20px; text-align: center; background-color: #f8f8f8;}",
         ".featured-products__title {font-size: 2rem; font-weight: bold; margin-bottom: 20px; color: #333;}",
@@ -13,14 +17,8 @@
         ".featured-products__name {font-size: 1.2rem; font-weight: 600; margin-top: 10px;}",
         ".featured-products__price {font-size: 1rem; color: #e60023; font-weight: bold;}",
         ".featured-products__empty {font-size: 1rem; color: #666;}"
-      ],
-      "settings": {
-        "collection": "all",
-        "title": "Featured products"
-      }
+      ]
     }
   },
-  "order": [
-    "featured_collection"
-  ]
+  "order": ["featured_collection"]
 }
