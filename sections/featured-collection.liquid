@@ -3,53 +3,30 @@
     <h2 class="featured-products__title">{{ section.settings.title }}</h2>
     <div class="featured-products__list">
       {% for product in section.settings.collection.products %}
-        <div class="featured-products__item">
-          <a href="{{ product.url }}" class="featured-products__link">
-            <img
-              src="{{ product.featured_image | img_url: 'medium' }}"
-              alt="{{ product.title }}"
-              class="featured-products__image"
-              style="width: 375px; height: 260px; top: -69px; left: 1064px; object-fit: cover; border-radius: 6px;"
-              width="375px"
-              height = "260px"
-            >
-            <h3 class="featured-products__name">{{ product.title }}</h3>
-            <p class="featured-products__price">{{ product.price | money }}</p>
-          </a>
-          <button class="featured-products__add-to-cart" data-product-id="{{ product.variants.first.id }}">
-            Add to cart - {{ product.price | money }}
-          </button>
-        </div>
+        {% unless product in cart.items %}
+          <div class="featured-products__item">
+            <a href="{{ product.url }}" class="featured-products__link">
+              <img
+                src="{{ product.featured_image | img_url: 'medium' }}"
+                alt="{{ product.title }}"
+                class="featured-products__image"
+                width="375px"
+                height="260px"
+              >
+              <h3 class="featured-products__name">{{ product.title }}</h3>
+              <p class="featured-products__price">{{ product.price | money }}</p>
+            </a>
+            <button class="featured-products__add-to-cart" data-product-id="{{ product.variants.first.id }}">
+              Add to cart - {{ product.price | money }}
+            </button>
+          </div>
+        {% endunless %}
       {% endfor %}
     </div>
   </div>
 {% else %}
   <p>No products available. Select a collection in the theme customizer.</p>
 {% endif %}
-
-<style>
-  .featured-products__add-to-cart {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    display: inline-block;
-  }
-
-  .featured-products__add-to-cart:hover {
-    background-color: #0056b3;
-  }
-
-  .featured-products__item {
-    width: 520px;
-    height: 485px;
-    top: -528px;
-    left: 20px;
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
