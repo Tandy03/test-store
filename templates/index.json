@@ -18,7 +18,9 @@
         ".featured-products__price {font-size: 1rem; color: #e60023; font-weight: bold;}",
         ".featured-products__empty {font-size: 1rem; color: #666;}",
         ".featured-products__add-to-cart {margin-top: 10px; padding: 10px 20px; background-color: #464B90; color: white; border: none; border-radius: 20px; cursor: pointer; display: inline-block;}",
-        ".featured-products__add-to-cart:hover {background-color: #464BBB;}"
+        ".featured-products__add-to-cart:hover {background-color: #464BBB;}",
+        "@media (max-width: 1200px) {.featured-products__item {flex: 1 1 45%; max-width: 45%;}}",
+        "@media (max-width: 800px) {.featured-products__item {flex: 1 1 100%; max-width: 100%;}}"
       ]
     }
   },

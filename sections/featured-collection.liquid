@@ -7,7 +7,7 @@
           <div class="featured-products__item">
             <a href="{{ product.url }}" class="featured-products__link">
               <img
-                src="{{ product.featured_image | img_url: 'medium' }}"
+                src="{{ product.featured_image | image_url: 'medium' }}"
                 alt="{{ product.title }}"
                 class="featured-products__image"
                 width="375px"
@@ -45,14 +45,12 @@
             throw new Error('Failed to add product to cart.');
           })
           .then(function (data) {
-            // Оновлення кошика
             fetch('/cart?view=popup')
               .then(response => response.text())
               .then(html => {
                 document.querySelector('.mini-cart').innerHTML = html;
               });
 
-            // Оновлення секції з товарами
             var sectionId = '{{ section.id }}';
             fetch('/?section_id=' + sectionId)
               .then(response => response.text())
