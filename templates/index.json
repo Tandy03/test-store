@@ -13,7 +13,7 @@
         ".featured-products__item {background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out;}",
         ".featured-products__item:hover {transform: translateY(-5px);}",
         ".featured-products__link {text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;}",
-        ".featured-products__image {width: 100%; max-width: 200px; height: auto; border-radius: 6px;}",
+        ".featured-products__image {max-width: 150px; height: 150px; object-fit: cover; border-radius: 6px;}",
         ".featured-products__name {font-size: 1.2rem; font-weight: 600; margin-top: 10px;}",
         ".featured-products__price {font-size: 1rem; color: #e60023; font-weight: bold;}",
         ".featured-products__empty {font-size: 1rem; color: #666;}"
