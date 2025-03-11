@@ -9,8 +9,9 @@
               src="{{ product.featured_image | img_url: 'medium' }}"
               alt="{{ product.title }}"
               class="featured-products__image"
-              width="{{ product.featured_image.width }}"
-              height="{{ product.featured_image.height }}"
+              style="width: 375px; height: 260px; top: -69px; left: 1064px; object-fit: cover; border-radius: 6px;"
+              width="375px"
+              height = "260px"
             >
             <h3 class="featured-products__name">{{ product.title }}</h3>
             <p class="featured-products__price">{{ product.price | money }}</p>
@@ -40,6 +41,13 @@
 
   .featured-products__add-to-cart:hover {
     background-color: #0056b3;
+  }
+
+  .featured-products__item {
+    width: 520px;
+    height: 485px;
+    top: -528px;
+    left: 20px;
   }
 </style>
 
