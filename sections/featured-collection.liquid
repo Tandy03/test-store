@@ -3,7 +3,13 @@
     <h2 class="featured-products__title">{{ section.settings.title }}</h2>
     <div class="featured-products__list">
       {% for product in section.settings.collection.products %}
-        {% unless product in cart.items %}
+        {% assign product_in_cart = false %}
+        {% for item in cart.items %}
+          {% if item.product_id == product.id %}
+            {% assign product_in_cart = true %}
+          {% endif %}
+        {% endfor %}
+        {% if product_in_cart == false %}
           <div class="featured-products__item">
             <a href="{{ product.url }}" class="featured-products__link">
               <img
@@ -16,10 +22,10 @@
               <h3 class="featured-products__name">{{ product.title }}</h3>
             </a>
             <button class="featured-products__add-to-cart" data-product-id="{{ product.variants.first.id }}">
-              Add to cart - {{ product.price | money_without_trailing_zeros }}
+              Add to cart - {{ product.price | money }}
             </button>
           </div>
-        {% endunless %}
+        {% endif %}
       {% endfor %}
     </div>
   </div>
@@ -132,7 +138,6 @@
           .then(function (data) {
             console.log('Product added to cart:', data);
 
-            // Оновлення кошика без перезавантаження сторінки
             var miniCart = document.querySelector('.mini-cart');
             if (miniCart) {
               fetch('/cart?view=popup')
@@ -142,7 +147,6 @@
                 });
             }
 
-            // Оновлення секції "Featured Products" без перезавантаження сторінки
             var sectionId = '{{ section.id }}';
             fetch('/?section_id=' + sectionId)
               .then(response => response.text())
