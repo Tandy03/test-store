@@ -163,21 +163,6 @@
           .then(function (data) {
             console.log('Product added to cart:', data);
 
-            fetch('/cart.js')
-              .then((response) => response.json())
-              .then((cart) => {
-                var cartBubble = document.querySelector('.cart-count-bubble');
-                if (cartBubble) {
-                  if (cart.item_count > 0) {
-                    cartBubble.innerHTML = `<span aria-hidden="true">${cart.item_count}</span>
-                    <span class="visually-hidden"> ${cart.item_count} items in cart</span>`;
-                    cartBubble.style.display = 'block';
-                  } else {
-                    cartBubble.style.display = 'none';
-                  }
-                }
-              });
-
             var miniCart = document.querySelector('.mini-cart');
             if (miniCart) {
               fetch('/cart?view=popup')
@@ -190,6 +175,18 @@
             var sectionId = '{{ section.id }}';
             fetch('/?section_id=' + sectionId)
               .then((response) => response.text())
+              .then((cart) => {
+                var cartBubble = document.querySelector('.cart-count-bubble');
+                if (cartBubble) {
+                  if (cart.item_count > 0) {
+                    cartBubble.innerHTML = `<span aria-hidden="true">${cart.item_count}</span>
+                    <span class="visually-hidden"> ${cart.item_count} items in cart</span>`;
+                    cartBubble.style.display = 'block';
+                  } else {
+                    cartBubble.style.display = 'none';
+                  }
+                }
+              })
               .then((html) => {
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(html, 'text/html');
