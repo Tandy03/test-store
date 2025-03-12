@@ -175,6 +175,12 @@
             var sectionId = '{{ section.id }}';
             fetch('/?section_id=' + sectionId)
               .then((response) => response.text())
+              .then((html) => {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, 'text/html');
+                var newSection = doc.querySelector('.featured-products.section');
+                document.querySelector('.featured-products.section').innerHTML = newSection.innerHTML;
+              });
               .then((cart) => {
                 var cartBubble = document.querySelector('.cart-count-bubble');
                 if (cartBubble) {
@@ -187,12 +193,6 @@
                   }
                 }
               })
-              .then((html) => {
-                var parser = new DOMParser();
-                var doc = parser.parseFromString(html, 'text/html');
-                var newSection = doc.querySelector('.featured-products.section');
-                document.querySelector('.featured-products.section').innerHTML = newSection.innerHTML;
-              });
           })
           .catch(function (error) {
             console.error(error);
