@@ -146,48 +146,37 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.featured-products__add-to-cart').forEach(function (button) {
-      button.addEventListener('click', function () {
-        var productId = this.dataset.productId;
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: productId, quantity: 1 }),
+  document.querySelectorAll('.featured-products__add-to-cart').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var productId = this.dataset.productId;
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: productId, quantity: 1 }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Product added to cart:', data);
+
+          fetch('/cart.js')
+            .then(response => response.json())
+            .then(cart => {
+              var cartBubble = document.querySelector('.cart-count-bubble');
+              if (cartBubble) {
+                if (cart.item_count > 0) {
+                  cartBubble.innerHTML = `<span aria-hidden="true">${cart.item_count}</span>
+                    <span class="visually-hidden"> ${cart.item_count} items in cart</span>`;
+                  cartBubble.style.display = 'block';
+                } else {
+                  cartBubble.style.display = 'none';
+                }
+              }
+            });
         })
-          .then(function (response) {
-            if (response.ok) {
-              return response.json();
-            }
-            throw new Error('Failed to add product to cart.');
-          })
-          .then(function (data) {
-            console.log('Product added to cart:', data);
-
-            var miniCart = document.querySelector('.mini-cart');
-            if (miniCart) {
-              fetch('/cart?view=popup')
-                .then((response) => response.text())
-                .then((html) => {
-                  miniCart.innerHTML = html;
-                });
-            }
-
-            var sectionId = '{{ section.id }}';
-            fetch('/?section_id=' + sectionId)
-              .then((response) => response.text())
-              .then((html) => {
-                var parser = new DOMParser();
-                var doc = parser.parseFromString(html, 'text/html');
-                var newSection = doc.querySelector('.featured-products.section');
-                document.querySelector('.featured-products.section').innerHTML = newSection.innerHTML;
-              });
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
-      });
+        .catch(error => console.error('Error adding to cart:', error));
     });
   });
+});
 </script>
 
 {% schema %}
