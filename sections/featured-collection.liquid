@@ -40,10 +40,11 @@
     background-color: #f8f8f8;
   }
   .featured-products__title {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 42px;
+    font-weight: 900;
     margin-bottom: 20px;
-    color: #333;
+    color: #656874;
+    line-height: 42px;
   }
   .featured-products__list {
     display: flex;
@@ -54,7 +55,8 @@
   }
   .featured-products__item {
     width: 40%;
-    max-width: 300px;
+    max-width: 520px;
+    height: 485px;
     background: white;
     padding: 15px;
     border-radius: 8px;
@@ -79,13 +81,15 @@
     border-radius: 6px;
   }
   .featured-products__name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-top: 10px;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 42px;
+    letter-spacing: 0%;
+    text-align: center;
   }
   .featured-products__price {
     font-size: 1rem;
-    color: #464B90;
+    color: #464b90;
     font-weight: bold;
   }
   .featured-products__empty {
@@ -95,15 +99,22 @@
   .featured-products__add-to-cart {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #464B90;
+    background-color: #464b90;
     color: white;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     display: inline-block;
+    width: 285;
+    height: 62;
+    border-radius: 40px;
+    border-width: 1px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
   }
   .featured-products__add-to-cart:hover {
-    background-color: #464BBB;
+    background-color: #464bbb;
   }
   @media (max-width: 1200px) {
     .featured-products__item {
@@ -141,16 +152,16 @@
             var miniCart = document.querySelector('.mini-cart');
             if (miniCart) {
               fetch('/cart?view=popup')
-                .then(response => response.text())
-                .then(html => {
+                .then((response) => response.text())
+                .then((html) => {
                   miniCart.innerHTML = html;
                 });
             }
 
             var sectionId = '{{ section.id }}';
             fetch('/?section_id=' + sectionId)
-              .then(response => response.text())
-              .then(html => {
+              .then((response) => response.text())
+              .then((html) => {
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(html, 'text/html');
                 var newSection = doc.querySelector('.featured-products.section');
