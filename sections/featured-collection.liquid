@@ -148,7 +148,6 @@
           .then(function (data) {
             console.log('Product added to cart:', data);
 
-            // Оновлення кошика без перезавантаження сторінки
             var miniCart = document.querySelector('.mini-cart');
             if (miniCart) {
               fetch('/cart?view=popup')
@@ -158,7 +157,6 @@
                 });
             }
 
-            // Оновлення секції "Featured Products" без перезавантаження сторінки
             var sectionId = '{{ section.id }}';
             fetch('/?section_id=' + sectionId)
               .then(response => response.text())
