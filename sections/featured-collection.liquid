@@ -1,155 +1,8 @@
-{% if section.settings.collection and section.settings.collection.products.size > 0 %}
-  <div class="featured-products section">
-    <h2 class="featured-products__title">{{ section.settings.title }}</h2>
-    <div class="featured-products__list">
-      {% for product in section.settings.collection.products %}
-        {% assign product_in_cart = false %}
-        {% for item in cart.items %}
-          {% if item.product_id == product.id %}
-            {% assign product_in_cart = true %}
-          {% endif %}
-        {% endfor %}
-        {% unless product_in_cart %}
-          <div class="featured-products__item">
-            <a href="{{ product.url }}" class="featured-products__link">
-              <img
-                src="{{ product.featured_image | img_url: 'medium' }}"
-                alt="{{ product.title }}"
-                class="featured-products__image"
-                width="100%"
-                height="340px"
-              >
-              <h3 class="featured-products__name">{{ product.title }}</h3>
-            </a>
-            <button class="featured-products__add-to-cart" data-product-id="{{ product.variants.first.id }}">
-              Add to cart - {{ product.price | money_without_trailing_zeros }}
-            </button>
-          </div>
-        {% endunless %}
-      {% endfor %}
-    </div>
-  </div>
-{% else %}
-  <p>No products available. Select a collection in the theme customizer.</p>
-{% endif %}
-
-<style>
-  .featured-products {
-    padding: 40px 20px;
-    text-align: center;
-    background-color: #f8f8f8;
-  }
-  .featured-products__title {
-    font-size: 42px;
-    font-weight: 900;
-    margin-bottom: 20px;
-    color: #656874;
-    line-height: 42px;
-  }
-  .featured-products__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-    gap: 16px;
-  }
-  .featured-products__item {
-    width: 520px;
-    max-height: 520px;
-    padding: 15px;
-    margin: 10px;
-  }
-  .featured-products__item:hover {
-    transform: translateY(-5px);
-  }
-  .featured-products__link {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .featured-products__image {
-    width: 100%;
-    height: 340px;
-    object-fit: cover;
-  }
-  .featured-products__name {
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 32px;
-    text-align: center;
-  }
-  .featured-products__price {
-    font-size: 1rem;
-    color: #464b90;
-    font-weight: bold;
-  }
-  .featured-products__empty {
-    font-size: 1rem;
-    color: #616161;
-  }
-  .featured-products__add-to-cart {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #464b90;
-    color: white;
-    cursor: pointer;
-    display: inline-block;
-    width: 285px;
-    height: 62px;
-    border-radius: 40px;
-    border-width: 1px;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 26px;
-  }
-  .featured-products__add-to-cart:hover {
-    background-color: #464bbb;
-  }
-  @media (max-width: 1200px) {
-    .featured-products__item {
-      flex: 1 1 45%;
-      max-width: 45%;
-    }
-  }
-  @media (max-width: 800px) {
-    .featured-products__item {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
-    .featured-products__image {
-      width: 375px;
-      height: 260px;
-    }
-  }
-  @media (max-width: 435px) {
-    .featured-products__item {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
-    .featured-products__image {
-      width: 100%;
-    }
-    .featured-products__add-to-cart {
-      width: 80%;
-      height: 54px;
-      font-size: 14px;
-    }
-    .featured-products__title {
-      font-weight: 900;
-      font-size: 26px;
-      line-height: 36px;
-    }
-  }
-</style>
-
-<script>
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.featured-products__add-to-cart').forEach(function (button) {
     button.addEventListener('click', function () {
       var productId = this.dataset.productId;
-      
+
       fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -181,41 +34,17 @@ document.addEventListener('DOMContentLoaded', function () {
             cart.items.forEach(function (item) {
               var recommendedItem = document.querySelector(`[data-product-id="${item.product_id}"]`);
               if (recommendedItem) {
-                recommendedItem.closest('.featured-products__item').style.display = 'none';
+                var productItem = recommendedItem.closest('.featured-products__item');
+                if (productItem) {
+                  productItem.style.display = 'none'; // Ховаємо товар
+                }
               }
             });
           });
       })
       .catch(function (error) {
-        console.error(error);
+        console.error('Error adding to cart:', error);
       });
     });
   });
 });
-
-</script>
-
-{% schema %}
-{
-  "name": "Featured Products",
-  "settings": [
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title",
-      "default": "Featured Products"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Featured Products",
-      "category": "Custom"
-    }
-  ]
-}
-{% endschema %}
