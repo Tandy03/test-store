@@ -13,7 +13,7 @@
           <div class="featured-products__item">
             <a href="{{ product.url }}" class="featured-products__link">
               <img
-                src="{{ product.featured_image | image_url: 'medium' }}"
+                src="{{ product.featured_image | img_url: 'medium' }}"
                 alt="{{ product.title }}"
                 class="featured-products__image"
                 width="520px"
@@ -56,7 +56,7 @@
   .featured-products__item {
     width: 40%;
     max-width: 520px;
-    height: 485px;
+    height: 520px;
     background: white;
     padding: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
