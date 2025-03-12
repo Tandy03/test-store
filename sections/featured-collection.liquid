@@ -16,13 +16,13 @@
                 src="{{ product.featured_image | image_url: 'medium' }}"
                 alt="{{ product.title }}"
                 class="featured-products__image"
-                width="90%"
-                height="200px"
+                width="375px"
+                height="260px"
               >
               <h3 class="featured-products__name">{{ product.title }}</h3>
             </a>
             <button class="featured-products__add-to-cart" data-product-id="{{ product.variants.first.id }}">
-              Add to cart - {{ product.price | money }}
+              Add to cart - {{ product.price | money_without_trailing_zeros }}
             </button>
           </div>
         {% endif %}
@@ -34,11 +34,33 @@
 {% endif %}
 
 <style>
+  .featured-products {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f8f8f8;
+  }
   .featured-products__title {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
     color: #333;
+  }
+  .featured-products__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+  }
+  .featured-products__item {
+    width: 40%;
+    max-width: 300px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    margin: 10px;
   }
   .featured-products__item:hover {
     transform: translateY(-5px);
@@ -69,6 +91,16 @@
   .featured-products__empty {
     font-size: 1rem;
     color: #666;
+  }
+  .featured-products__add-to-cart {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #464B90;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
   }
   .featured-products__add-to-cart:hover {
     background-color: #464BBB;
@@ -106,6 +138,7 @@
           .then(function (data) {
             console.log('Product added to cart:', data);
 
+            // Оновлення кошика без перезавантаження сторінки
             var miniCart = document.querySelector('.mini-cart');
             if (miniCart) {
               fetch('/cart?view=popup')
@@ -115,6 +148,7 @@
                 });
             }
 
+            // Оновлення секції "Featured Products" без перезавантаження сторінки
             var sectionId = '{{ section.id }}';
             fetch('/?section_id=' + sectionId)
               .then(response => response.text())
