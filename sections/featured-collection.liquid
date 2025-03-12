@@ -145,38 +145,55 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.featured-products__add-to-cart').forEach(function (button) {
-    button.addEventListener('click', function () {
-      var productId = this.dataset.productId;
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: productId, quantity: 1 }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Product added to cart:', data);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.featured-products__add-to-cart').forEach((button) => {
+      button.addEventListener('click', () => {
+        const productId = button.dataset.productId;
 
-          fetch('/cart.js')
-            .then(response => response.json())
-            .then(cart => {
-              var cartBubble = document.querySelector('.cart-count-bubble');
-              if (cartBubble) {
-                if (cart.item_count > 0) {
-                  cartBubble.innerHTML = `<span aria-hidden="true">${cart.item_count}</span>
-                    <span class="visually-hidden"> ${cart.item_count} items in cart</span>`;
-                  cartBubble.style.display = 'block';
-                } else {
-                  cartBubble.style.display = 'none';
-                }
-              }
-            });
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: productId, quantity: 1 }),
         })
-        .catch(error => console.error('Error adding to cart:', error));
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Failed to add product to cart.');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log('Product added to cart:', data);
+
+            fetch('/cart.js')
+              .then((response) => response.json())
+              .then((cart) => {
+                const cartBubble = document.querySelector('.cart-count-bubble');
+                if (cartBubble) {
+                  if (cart.item_count > 0) {
+                    cartBubble.innerHTML = `
+                      <span aria-hidden="true">${cart.item_count}</span>
+                      <span class="visually-hidden">${cart.item_count} items in cart</span>`;
+                    cartBubble.style.display = 'block';
+                  } else {
+                    cartBubble.style.display = 'none';
+                  }
+                }
+              });
+
+            const sectionId = '{{ section.id }}';
+            fetch('/?section_id=' + sectionId)
+              .then((response) => response.text())
+              .then((html) => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newSection = doc.querySelector('.featured-products.section');
+                document.querySelector('.featured-products.section').innerHTML = newSection.innerHTML;
+              });
+          })
+          .catch((error) => console.error('Error adding to cart:', error));
+      });
     });
   });
-});
 </script>
 
 {% schema %}
